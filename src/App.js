@@ -1,25 +1,47 @@
-import logo from './logo.svg';
-import './App.css';
+import { Component } from 'react';
+import Section from './components/Section/Section';
+import ImageGallery from './components/ImageGallery/ImageGallery';
+import Searchbar from './components/Searchbar/Searchbar';
+import Modal from './components/Modal/Modal';
+import { ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  state = {
+    searchName: '',
+    showModal: false,
+    option: {},
+  };
+
+  handleFormSubmit = searchName => {
+    this.setState({ searchName });
+  };
+  toggleModal = (src, alt) => {
+    this.setState(({ showModal }) => ({
+      showModal: !showModal,
+      option: { imageSrc: src, imageAlt: alt },
+    }));
+  };
+  render() {
+    const { option, searchName, showModal } = this.state;
+    return (
+      <>
+        <Section color={'#3f51b5'}>
+          <Searchbar onSubmit={this.handleFormSubmit} />
+        </Section>
+        <Section>
+          <ImageGallery searchName={searchName} onClick={this.toggleModal} />
+        </Section>
+        {showModal && (
+          <Modal
+            src={option.imageSrc}
+            alt={option.imageAlt}
+            onClose={this.toggleModal}
+          />
+        )}
+        <ToastContainer autoClose={4000} />
+      </>
+    );
+  }
 }
-
 export default App;
