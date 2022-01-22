@@ -1,31 +1,30 @@
 import { nanoid } from 'nanoid';
-import { Component } from 'react';
+import { useState } from 'react';
 import { ImSearch } from "react-icons/im";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import s from './Searchbar.module.scss';
 
-class Searchbar extends Component {
-  state = {
-    searchName: '',
-  };
+function Searchbar({onSubmit}) {
+  const [searchName, setSearchName] = useState('');
+  
 
-  handleNameChange = e => {
-    this.setState({ searchName: e.currentTarget.value.toLowerCase() });
+  const handleNameChange = e => {
+    setSearchName(e.currentTarget.value.toLowerCase());
   };
-  handleSubmit = e => {
+  const handleSubmit = e => {
     e.preventDefault();
-    if (this.state.searchName.trim() === '') {
+    if (searchName.trim() === '') {
       toast.error('type in the search!');
       return;
     }
-    this.props.onSubmit(this.state.searchName);
-    this.setState({ searchName: '' });
+    onSubmit(searchName);
+    setSearchName('' );
   };
-  render() {
+ 
     return (
       <div className={s.Header}>
-        <form className={s.Form} onSubmit={this.handleSubmit}>
+        <form className={s.Form} onSubmit={handleSubmit}>
           <button type="submit" className={s.Button}>
             <ImSearch/>
           </button>
@@ -39,13 +38,13 @@ class Searchbar extends Component {
             autoComplete="off"
             autoFocus
             placeholder="Search images and photos"
-            value={this.state.searchName}
-            onChange={this.handleNameChange}
+            value={searchName}
+            onChange={handleNameChange}
           />
         </form>
       </div>
     );
   }
-}
+
 
 export default Searchbar;

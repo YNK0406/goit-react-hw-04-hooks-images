@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import s from './Section.module.scss';
 
-const Section = ({ children, color }) => {
+const Section = ({ children}) => {
   return (
     <section className={s.Section}>
       <div className={s.Conteiner}>
