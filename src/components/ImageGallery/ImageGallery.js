@@ -19,7 +19,7 @@ const reducer = (state, action) => {
     case 'resolved':
       return {
         ...state,
-        image: [...state.image, ...action.payload],
+        image: [...action.payload],
         status: 'resolved',
       };
     case 'rejected':

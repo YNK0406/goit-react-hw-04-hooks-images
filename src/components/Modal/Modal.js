@@ -42,4 +42,3 @@ function Modal ({ src, alt, onClose }) {
     onClose: PropTypes.func.isRequired,
   };
   export default Modal;
-
